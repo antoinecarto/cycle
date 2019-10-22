@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cycle des quintes</title>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+    <script type="text/javascript" src="psd3.js"></script>
+    <link rel="stylesheet" type="text/css" href="psd3.css" />
+</head>
+
+<body style="margin: 15px;">
+
+    <div class="container">
+        <div class="well">
+            <h2>Cycle des quintes / Circle of fifths</h2>
+            <h4>using psd3 by <a href="https://github.com/pshivale" target="_blank">pshivale</a></h4>
+        </div>
+
+        <div id="chartContainer" class="well"></div>
+    </div>
+
+    <script type="text/javascript">
+        var sampleData = [{
+            noOfScale: 7,
+            place: "Si° (B°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Lam (Am)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Do (C)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Fa#° (F#°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Mim (Em)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Sol (G)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Do#° (C#°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Sim (Bm)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Ré (D)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Sol#° (G#°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Fa#m (F#m)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "La (A)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Ré#° (D#°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Do#m (C#m)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Mi (E)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "La#° (A#°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Sol#m (G#m)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Si (B)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Fa° (F°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Ré#m (D#m)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Fa# (F#)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Do° (C°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "La#m (A#m)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Do# (C#)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Sol° (G°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Fam (Fm)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Sol# (G#)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Ré° (D°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Dom (Cm)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Ré# (D#)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "La° (A°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Solm (Gm)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "La# (A#)",
+                    drilldown: []
+                }]
+            }]
+        }, {
+            noOfScale: 7,
+            place: "Mi° (E°)",
+            drilldown: [{
+                noOfScale: 6,
+                place: "Rém (Dm)",
+                drilldown: [{
+                    noOfScale: 1,
+                    place: "Fa (F)",
+                    drilldown: []
+                }]
+            }]
+        }];
+        var config = {
+            containerId: "chartContainer",
+            width: 600,
+            height: 600,
+            data: sampleData,
+            heading: {
+                text: "Cycle des quintes / Circle of fifths",
+                pos: "top"
+            },
+            label: function(d) {
+                return d.data.place; //+ ":" + d.data.noOfScale
+            },
+            value: "noOfScale",
+            inner: "drilldown",
+            tooltip: function(d) {
+                return "<div style='background-color: #7a7574; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'><strong>" + d.place + "</strong> est au " + d.noOfScale + " rang de la gamme.</div>";
+            },
+            transition: "linear",
+            transitionDuration: 500,
+            donutRadius: 80,
+            gradient: true,
+            colors: d3.scale.category20b(),
+            labelColor: "white",
+            stroke: "#eee",
+            strokeWidth: 1,
+            drilldownTransition: "linear",
+            drilldownTransitionDuration: 0,
+            highlightColor: "#c00"
+        };
+        var samplePie = new psd3.Pie(config);
+    </script>
+
+</body>
+
+</html>
